@@ -40,11 +40,15 @@ Route::get('/find_hotel/{city}', function (Request $request, $city) {
     $response = curl_exec($curl);
     $err = curl_error($curl);
 
+    $json_arr = [];
+
     curl_close($curl);
 
     if ($err) {
-        echo "cURL Error #:" . $err;
+        $json_arr['error'] = "cURL Error #:" . $err;
     } else {
-        echo $response;
+        $json_arr = json_decode($response, TRUE);
     }
+
+    return $json_arr;
 });

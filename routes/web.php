@@ -36,6 +36,12 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
     });
 
     Route::group(['middleware' => ['auth']], function() {
+        Route::get('/places', 'PlaceController@index')->name('place.index');
+        Route::get('/import', 'ImportController@index')->name('import.index');
+        Route::get('/import/store_palaces/{id}', 'ImportController@storePlaces')->name('import.store.places');
+        Route::get('/import/delete/{id}', 'ImportController@delete')->name('import.delete');
+        Route::post('/import', 'ImportController@importStore')->name('import.perform');
+        Route::get('/find/hotels/city/{city}', 'HotelController@searchHotels');
         /**
          * Logout Routes
          */
