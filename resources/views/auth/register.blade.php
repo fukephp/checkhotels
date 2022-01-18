@@ -2,9 +2,8 @@
 
 @section('content')
     <form method="post" action="{{ route('register.perform') }}">
+        @csrf
 
-        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-        
         <h1 class="h3 mb-3 fw-normal">Register</h1>
 
         <div class="form-group form-floating mb-3">

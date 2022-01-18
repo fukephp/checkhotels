@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('breadcrumb')
+<li class="breadcrumb-item">Import CSV data</li>
+@endsection
+
 @section('content')
 <div class="row">
     <div class="col-lg-12">
@@ -39,12 +43,12 @@
 						    {{-- <h6 class="card-subtitle mb-2 text-muted">Card data</h6> --}}
 						    	<?php $i=0; ?>
 						    	@foreach($import->csvdata as $key => $data)
-						    		<?php
+						    		@php
 						    			if($key == 0) {
 						    				continue;
 						    			}
 						    			$i++;
-						    		?>
+						    		@endphp
 						    		<span class="mb-2 text-muted fs-12">{{ $i }}.</span>
 						    		<ul class="list-group list-group-flush">
 								    	<li class="list-group-item"><b>Country:</b> {!! $data[0] !!}</li>

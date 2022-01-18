@@ -4,11 +4,13 @@
     @auth
         <div class="row">
             <div class="col-lg-4">
+                <h6>Options</h6>
                 <div class="list-group">
                   <a href="{{ route('import.index') }}" class="list-group-item list-group-item-action">Import CSV data for places</a>
-                  <a href="#" class="list-group-item list-group-item-action">Places</a>
+                  <a href="{{ route('place.index') }}" class="list-group-item list-group-item-action">Places</a>
+                  {{-- <a href="#" class="list-group-item list-group-item-action">Places</a>
                   <a href="#" class="list-group-item list-group-item-action">Hotels</a>
-                  <a href="#" class="list-group-item list-group-item-action">Weathers</a>
+                  <a href="#" class="list-group-item list-group-item-action">Weathers</a> --}}
                   {{-- <a href="{{ route('import.csv') }}" class="list-group-item list-group-item-action" aria-current="true">
                     Import CSV data
                   </a>
@@ -27,34 +29,38 @@
                         <div class="col-lg-12">
                             <h1>Export data</h1>
                             <p>Select country and city to find suggested three hotels or check daily weather forecast</p>
-                            <form class="needs-validation">
+                            <form action="{{ route('place.search') }}" class="needs-validation" method="post">
+                                @csrf
                                 <div class="row">
-                                  <div class="col-md-5 mb-3">
-                                    <label for="country">Country</label>
-                                    <select class="custom-select d-block w-100" id="country" required="">
-                                      <option value="">Choose...</option>
-                                    </select>
-                                    <div class="invalid-feedback">
-                                      Please select a valid country.
+                                    <div class="col-md-5 mb-3">
+                                        <label for="country">Country</label>
+                                        <select name="country" class="custom-select d-block w-100" id="country">
+                                            <option value="">Choose country...</option>
+                                            @foreach($countries as $country)
+                                                <option value="{{ $country }}" {{ old('country') == $country ? 'selected' : '' }}>{{ $country }}</option>
+                                            @endforeach
+                                        </select>
+                                        {{-- <div class="invalid-feedback">
+                                            Please select a valid country.
+                                        </div> --}}
                                     </div>
-                                  </div>
-                                  <div class="col-md-4 mb-3">
-                                    <label for="city">City</label>
-                                    <input type="text" class="form-control" id="city" placeholder="" required="">
-                                    <div class="invalid-feedback">
-                                      Please provide a valid state.
+                                    <div class="col-md-4 mb-3">
+                                        <label for="city">City</label>
+                                        <input type="text" name="city" class="form-control" id="city" placeholder="" value="{{ old('city') }}">
+                                        {{-- <div class="invalid-feedback">
+                                            Please provide a valid city.
+                                        </div> --}}
                                     </div>
-                                  </div>
-                                  <div class="col-md-3 mb-3">
-                                    <label for="date">Date</label>
-                                    <input type="date" class="form-control" id="date" placeholder="" required="">
-                                    <div class="invalid-feedback">
-                                      Date code required.
+                                    <div class="col-md-3 mb-3">
+                                        <label for="date">Date</label>
+                                        <input type="date" name="date" class="form-control" id="date" placeholder="" value="{{ old('date') }}">
+                                        {{-- <div class="invalid-feedback">
+                                            Date code required.
+                                        </div> --}}
                                     </div>
-                                  </div>
-                                  <div class="col-md-12">
-                                      <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
-                                  </div>
+                                    <div class="col-md-12">
+                                        <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+                                    </div>
                                 </div>
                             </form>
                         </div>
