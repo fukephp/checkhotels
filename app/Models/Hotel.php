@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Place extends Model
+class Hotel extends Model
 {
     use HasFactory;
 
@@ -15,16 +15,17 @@ class Place extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'country',
-        'city',
-        'date',
+        'name',
+        'caption',
+        'lat',
+        'long',
     ];
 
     /**
-     * Get the comments for the blog post.
+     * Get the post that owns the comment.
      */
-    public function hotels()
+    public function place()
     {
-        return $this->hasMany(Hotel::class);
+        return $this->belongsTo(Place::class);
     }
 }

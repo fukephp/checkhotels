@@ -27,7 +27,6 @@
 &markers=size:mid%7Ccolor:red%7C{{ $clientHotel['name'] }}&key=AIzaSyAKpeS0-W6Sn4ie_XYoDXtPkQklnnep9RA" class="card-img-top mb-3">
                     <h5 class="card-title">{{ $clientHotel['name'] }}</h5>
                     <h6 class="card-subtitle mb-2 text-muted">{!! $clientHotel['caption'] !!}</h6>
-                    {{-- <small>Latitude: {{ $clientHotel['latitude'] }}, Longitude: {{ $clientHotel['longitude'] }}</small> --}}
                 </div>
             </div>
         </div>
@@ -35,9 +34,12 @@
 </div>
 <form action="{{ route('place.hotel.export.store', $place->id) }}" method="post">
 	@csrf
+	@foreach($clientHotels as $clientHotel)
+		<input type="hidden" name="client_hotels[]" value="{{ json_encode($clientHotel) }}">
+	@endforeach
 	<div class="row">
 		<div class="col-lg-12">
-			<a href="" class="btn btn-lg btn-primary mt-3">Submit</a>
+			<button type="submit" class="btn btn-lg btn-primary mt-3">Submit</button>
 		</div>
 	</div>
 </form>

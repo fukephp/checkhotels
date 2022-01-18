@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Custom\ApiHotelClient;
 use App\Http\Requests\ImportCsvRequest;
 use App\Http\Requests\SearchPlaceRequest;
+use App\Models\Hotel;
 use App\Models\Place;
 use Illuminate\Http\Request;
 
@@ -47,10 +48,26 @@ class PlaceController extends Controller
         return view('place.export_hotel', compact('place', 'clientHotels'));
     } 
 
-    public function exportHotelStore(Request $request)
+    public function exportHotelStore(Request $request, $id)
     {
-
-        dd($request->validated());
+        $place = Place::findOrFail($id);
+        foreach($request->client_hotels as $client_hotel) {
+            $client_hotel = json_decode($client_hotel);
+            $name = $client_hotel->name;
+            $caption = strip_tags($client_hotel->caption);
+            $lat = $client_hotel->latitude;
+            $long = $client_hotel->longitude;
+            // Save new hotel
+            $new_hotel = new Hotel;
+            $new_hotel->name = $name;
+            $new_hotel->caption = $caption;
+            $new_hotel->lat = $lat;
+            $new_hotel->long = $long;
+            // Save new hotel assign to current place
+            $place->hotels()->save($new_hotel);
+        }
+        //$clientHotels = ApiHotelClient::searchHotels($place->city);
+        return redirect()->route('place.view', $place->id)->with('success','Hotels are submitted!');
     } 
 
     public function exportWeather($id)
