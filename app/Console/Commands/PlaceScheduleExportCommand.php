@@ -4,21 +4,21 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class PlaceExportCommand extends Command
+class SchedulePlaceExportCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'export_schedule:hotels';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Schedule to export hotels and weather using RapidAPI(hotels4 and community-open-weather-map)';
 
     /**
      * Create a new command instance.
@@ -37,6 +37,9 @@ class PlaceExportCommand extends Command
      */
     public function handle()
     {
-        return 0;
+        $places = Place::all();
+        foreach($places as $place) {
+            
+        }
     }
 }

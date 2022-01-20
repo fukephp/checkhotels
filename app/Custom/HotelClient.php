@@ -8,38 +8,20 @@ namespace App\Custom;
  */
 class HotelClient
 {
-    public static function searchByGroup($value, $group) 
+    public static function searchByGroup($value, $group, $limit = 0) 
     {
-        $value = strtolower($value);
+        $value = mb_strtolower($value, 'UTF-8');
 
+        $value = iconv('UTF-8','ASCII//TRANSLIT',$value);
+
+        // Get suggestions
         $result = self::getEntitiesByGroup($value, $group);
 
-        return $result;
-    }
-    /**
-     * Search hotels by group 'HOTEL_GROUP'
-     * @param  [type] $value [description]
-     * @return [type]        [description]
-     */
-	public static function searchHotels($value, $group)
-    {
-        $suggestions = self::getEntitiesByGroup($value, $group);
-
         // Display only 3 suggesstions
-        $suggestions = array_slice($suggestions, 0, 3);
+        if($limit > 0)
+            $result = array_slice($result, 0, $limit);
 
-        return $suggestions;
-    }
-
-    protected static function findHotelByCity($value)
-    {
-        $value = strtolower($value);
-
-        $group = 'HOTEL_GROUP';
-
-        $hotels = self::getEntitiesByGroup($value, $group);
-
-        return $hotels;
+        return $result;
     }
 
     protected static function getEntitiesByGroup($value = '', $group = '') 

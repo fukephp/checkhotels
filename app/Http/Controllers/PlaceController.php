@@ -24,7 +24,7 @@ class PlaceController extends Controller
     public function view($id)
     {
         $place = Place::findOrFail($id);
-        $clientHotels = HotelClient::searchHotels($place->city, 'HOTEL_GROUP');
+        $clientHotels = HotelClient::searchByGroup($place->city, 'HOTEL_GROUP', $limit = 3);
         return view('place.view', compact('place', 'clientHotels'));
     } 
 
@@ -66,7 +66,7 @@ class PlaceController extends Controller
     public function exportHotel($id)
     {
         $place = Place::findOrFail($id);
-        $clientHotels = HotelClient::searchHotels($place->city, 'HOTEL_GROUP');
+        $clientHotels = HotelClient::searchByGroup($place->city, 'HOTEL_GROUP', $limit = 3);
         $clientWeather = WeatherClient::currentWeather($place->city);
         return view('place.export_hotel', compact('place', 'clientHotels', 'clientWeather'));
     } 
