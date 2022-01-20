@@ -21,10 +21,29 @@ class Place extends Model
     ];
 
     /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'date'
+    ];
+
+    /**
      * Get the comments for the blog post.
      */
     public function hotels()
     {
         return $this->hasMany(Hotel::class);
+    }
+
+    /**
+     * Get the comments for the blog post.
+     */
+    public function weathers()
+    {
+        return $this->hasMany(Weather::class);
     }
 }

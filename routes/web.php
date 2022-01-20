@@ -40,6 +40,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
          * Places
          */
         Route::get('/places', 'PlaceController@index')->name('place.index');
+        Route::get('/places/create', 'PlaceController@create')->name('place.create');
+        Route::post('/places/create/store', 'PlaceController@store')->name('place.store');
         Route::get('/places/{id}/view', 'PlaceController@view')->name('place.view');
         Route::get('/places/{id}/export/hotels', 'PlaceController@exportHotel')->name('place.hotel.export');
         Route::post('/places/{id}/export/hotels/store', 'PlaceController@exportHotelStore')->name('place.hotel.export.store');

@@ -3,25 +3,6 @@
 @section('content')
     @auth
         <div class="row">
-            <div class="col-lg-4">
-                <h6>Options</h6>
-                <div class="list-group">
-                  <a href="{{ route('import.index') }}" class="list-group-item list-group-item-action">Import CSV data for places</a>
-                  <a href="{{ route('place.index') }}" class="list-group-item list-group-item-action">Places</a>
-                  {{-- <a href="#" class="list-group-item list-group-item-action">Places</a>
-                  <a href="#" class="list-group-item list-group-item-action">Hotels</a>
-                  <a href="#" class="list-group-item list-group-item-action">Weathers</a> --}}
-                  {{-- <a href="{{ route('import.csv') }}" class="list-group-item list-group-item-action" aria-current="true">
-                    Import CSV data
-                  </a>
-                  <a href="{{ route('place.index') }}" class="list-group-item list-group-item-action">Places</a>
-                  <a href="{{ route('hotel.index') }}" class="list-group-item list-group-item-action">Hotels</a>
-                  <a href="{{ route('weather.index') }}" class="list-group-item list-group-item-action">Weathers</a> --}}
-                </div>
-            </div>
-        </div>
-        <hr>
-        <div class="row">
             <div class="col-lg-12">
                 <div class="bg-light p-5 rounded">
                     <!-- Find hotels -->

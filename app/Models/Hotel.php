@@ -28,4 +28,9 @@ class Hotel extends Model
     {
         return $this->belongsTo(Place::class);
     }
+
+    public function scopeHaveHotel($query, $name)
+    {
+        return $query->where('name', $name);
+    }
 }

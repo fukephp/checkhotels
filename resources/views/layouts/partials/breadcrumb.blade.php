@@ -1,3 +1,4 @@
+@if(request()->route()->getName() != 'home.index')
 @auth
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
@@ -6,3 +7,4 @@
   </ol>
 </nav>
 @endauth
+@endif
