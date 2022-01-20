@@ -42,6 +42,8 @@ class PlaceManualExportCommand extends Command
      */
     public function handle()
     {
+        $this->info('Start command!');
+
         $places = Place::all();
         $countries = Place::all()->pluck('country')->unique()->toArray();
         $cities = Place::all()->pluck('city')->unique()->toArray();
@@ -122,37 +124,39 @@ class PlaceManualExportCommand extends Command
             $barWeather->start();
             foreach($places as $place) {
                 $clientWeather = WeatherClient::currentWeather($place->city);
-                $clientWeatherList = $clientWeather['list'];
-                if(empty($clientWeatherList)) {
-                    $this->error('The weather list is empty');
-                }
-                foreach($clientWeatherList as $list) {
-                    $date = \Carbon\Carbon::createFromTimestamp($list['dt'])->format('Y-m-d H:i:s');
-                    // First check if wather for current date exists
-                    if(!$place->weathers()->todayWeather($list['dt'])->exists()) {
-                        // Save new Weather
-                        $new_weather = new Weather;
-                        $new_weather->api_weather_id = $list['weather'][0]['id'];
-                        $new_weather->main = $list['weather'][0]['main'];
-                        $new_weather->description = $list['weather'][0]['description'];
-                        $new_weather->icon = $list['weather'][0]['icon'];
-                        $new_weather->temp_day = $list['temp']['day'];
-                        $new_weather->temp_min = $list['temp']['min'];
-                        $new_weather->temp_max = $list['temp']['max'];
-                        $new_weather->temp_night = $list['temp']['night'];
-                        $new_weather->temp_eve = $list['temp']['eve'];
-                        $new_weather->temp_morn = $list['temp']['morn'];
-                        $new_weather->date = $date;
-                        if($place->weathers()->save($new_weather)) {
-                            $this->info('The weather for day ('. $date .') is stored in city '.$place->city);
-                        } else {
-                            $this->error('The weather for day ('. $date .') failed to stored in city '.$place->city);
-                        }
-                    } else {
-                        $this->warn('The weather for day ('. $date .') is already stored in city '.$place->city);
+                if(isset($clientWeather['list'])) {
+                    $clientWeatherList = $clientWeather['list'];
+                    if(empty($clientWeatherList)) {
+                        $this->error('The weather list is empty');
                     }
-                    // Advance progress bar
-                    $barWeather->advance();
+                    foreach($clientWeatherList as $list) {
+                        $date = \Carbon\Carbon::createFromTimestamp($list['dt'])->format('Y-m-d H:i:s');
+                        // First check if wather for current date exists
+                        if(!$place->weathers()->todayWeather($list['dt'])->exists()) {
+                            // Save new Weather
+                            $new_weather = new Weather;
+                            $new_weather->api_weather_id = $list['weather'][0]['id'];
+                            $new_weather->main = $list['weather'][0]['main'];
+                            $new_weather->description = $list['weather'][0]['description'];
+                            $new_weather->icon = $list['weather'][0]['icon'];
+                            $new_weather->temp_day = $list['temp']['day'];
+                            $new_weather->temp_min = $list['temp']['min'];
+                            $new_weather->temp_max = $list['temp']['max'];
+                            $new_weather->temp_night = $list['temp']['night'];
+                            $new_weather->temp_eve = $list['temp']['eve'];
+                            $new_weather->temp_morn = $list['temp']['morn'];
+                            $new_weather->date = $date;
+                            if($place->weathers()->save($new_weather)) {
+                                $this->info('The weather for day ('. $date .') is stored in city '.$place->city);
+                            } else {
+                                $this->error('The weather for day ('. $date .') failed to stored in city '.$place->city);
+                            }
+                        } else {
+                            $this->warn('The weather for day ('. $date .') is already stored in city '.$place->city);
+                        }
+                        // Advance progress bar
+                        $barWeather->advance();
+                    }
                 }
             }
             // Finish
@@ -162,7 +166,7 @@ class PlaceManualExportCommand extends Command
         // Write a single blank line...
         $this->newLine();
 
-        $this->info('Command is finished!');
+        $this->info('End command!');
 
         return true;
     }

@@ -113,6 +113,19 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+
+        'placeexportlog' => [
+            'level' => 'debug',
+            'driver' => 'single',
+            'path' => storage_path('logs/place_export.log'),
+        ],
+
+        'placeexportdatalog' => [
+            'level' => 'debug',
+            'driver' => 'single',
+            'path' => storage_path('logs/place_export_data.log'),
+        ],
+
     ],
 
 ];

@@ -11,8 +11,10 @@ class WeatherClient
     {
         $result = self::curlSetup($value);
 
-        foreach($result['list'] as $list) {
-            $list['weather'][0]['img_src'] = 'http://openweathermap.org/img/wn/'.$list['weather'][0]['icon'].'@2x.png';
+        if(isset($result['list'])) {
+            foreach($result['list'] as $list) {
+                $list['weather'][0]['img_src'] = 'http://openweathermap.org/img/wn/'.$list['weather'][0]['icon'].'@2x.png';
+            }
         }
 
         return $result;
