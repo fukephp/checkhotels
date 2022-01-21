@@ -126,6 +126,12 @@ return [
             'path' => storage_path('logs/place_export_data.log'),
         ],
 
+        'rapidapilog' => [
+            'level' => 'debug',
+            'driver' => 'single',
+            'path' => storage_path('logs/rapid_api.log'),
+        ],
+
     ],
 
 ];

@@ -16,12 +16,7 @@ class HotelClient
 
         $value = iconv('UTF-8','ASCII//TRANSLIT',$value);
 
-        $client = 'hotels4';
-        $host = env('RAPIDAPI_HOTEL_HOST', 'x-rapidapi-host: hotels4.p.rapidapi.com');
-        $key = env('RAPIDAPI_KEY', 'x-rapidapi-key: ab7f802e0amshf8692a3e0dd106dp187dacjsnf1566aa8ff65');
-
-        $rapidApiClient = new RapidApiClient($client, $host, $key);
-        $response = $rapidApiClient->curlSetup($value);
+        $response = self::connectClient($value);
 
         // Get suggestions
         $result = self::getEntitiesByGroup($response, $value, $group);
@@ -68,6 +63,18 @@ class HotelClient
         }
 
         return $response['suggestions'];
+    }
+
+    protected static function connectClient($value) 
+    {
+        $client = 'hotels4';
+        $host = env('RAPIDAPI_HOTEL_HOST', 'x-rapidapi-host: hotels4.p.rapidapi.com');
+        $key = env('RAPIDAPI_KEY', 'x-rapidapi-key: ab7f802e0amshf8692a3e0dd106dp187dacjsnf1566aa8ff65');
+
+        $rapidApiClient = new RapidApiClient($client, $host, $key);
+        $response = $rapidApiClient->curlSetup($value);
+
+        return $response;
     }
 
 }

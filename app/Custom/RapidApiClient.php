@@ -1,6 +1,8 @@
 <?php 
 namespace App\Custom;
 
+use Illuminate\Support\Facades\Log;
+
 class RapidApiClient 
 {
 	protected $client = '';
@@ -66,6 +68,8 @@ class RapidApiClient
         } else {
             $json_arr = json_decode($response, TRUE);
         }
+
+        Log::channel('rapidapilog')->info(json_encode($json_arr));
 
         return $json_arr;
     }
