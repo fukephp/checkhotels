@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        // * * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
         $schedule->command(PlaceScheduleExportCommand::class)->everySixHours();
     }
 

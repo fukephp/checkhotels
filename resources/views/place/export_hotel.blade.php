@@ -21,6 +21,11 @@
 		    </div>
 		</div>
 		<div class="row">
+			@if(empty($clientHotels))
+				<div class="col-lg-12">
+					<p class="text-muted mt-3 mb-3">No results.</p>
+				</div>
+			@endif
 		    @foreach($clientHotels as $clientHotel)
 		        <div class="col-lg-4">
 		            <div class="card bg-light mt-3 mb-3" style="width: 100%;">
