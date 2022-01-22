@@ -36,7 +36,7 @@ class ImportController extends Controller
      */
     public function importStore(ImportCsvRequest $request)
     {
-        $fileName = time().'_'.$request->file->getClientOriginalName();
+        $fileName = $request->file->getClientOriginalName();
         $filePath = $request->file('file')->storeAs('csv', $fileName, 'public');
 
         $import = Import::create(['name' => $fileName, 'path' => $filePath]);

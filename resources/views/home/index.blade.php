@@ -4,6 +4,23 @@
     @auth
         <div class="row">
             <div class="col-lg-12">
+                <div class="bg-light p-5 rounded mb-4">
+                    <!-- Find places -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h1>Places</h1>
+                            <p>Select a place and view list of hotels and current weather</p>
+                            <a href="{{ route('place.create') }}" class="btn btn-outline-primary btn-lg">Create new place</a>
+                            <span class="mr-3 ml-3">Or</span>
+                            <a href="{{ route('import.index') }}" class="btn btn-outline-primary btn-lg">Import CSV data for places</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
                 <div class="bg-light p-5 rounded">
                     <!-- Find hotels -->
                     <div class="row">
