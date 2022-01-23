@@ -40,7 +40,7 @@
 		    	<div class="card bg-light" style="">
 		            <div class="card-body">
 		                <img src="https://maps.googleapis.com/maps/api/staticmap?size=300x300&maptype=roadmap\
-		&markers=size:mid%7Ccolor:red%7C{{ $hotel->name }}&key=AIzaSyAKpeS0-W6Sn4ie_XYoDXtPkQklnnep9RA" class="card-img-top mb-3">
+		&markers=size:mid%7Ccolor:red%7C{{ $hotel->name }}&key={{ env('GOOGLE_MAPS_STATIC_API_KEY') }}" class="card-img-top mb-3">
 		                <h5 class="card-title">{!! $hotel->name !!}</h5>
 		                <h6 class="card-subtitle mb-2 text-muted">{!! $hotel->place->city. ', ' .$hotel->place->country !!}</h6>
 		            </div>

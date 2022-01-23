@@ -6,8 +6,6 @@
 
 @section('content')
 
-
-
 	@include('home.partials.hotel_list_with_filter')
 
 @endsection

@@ -9,7 +9,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h1>Places</h1>
-                            <p>Select a place and view list of hotels and current weather</p>
+                            <p>Create new place manualy or import csv for places(columns: country, city, and date)</p>
                             <a href="{{ route('place.create') }}" class="btn btn-outline-primary btn-lg">Create new place</a>
                             <span class="mr-3 ml-3">Or</span>
                             <a href="{{ route('import.index') }}" class="btn btn-outline-primary btn-lg">Import CSV data for places</a>
@@ -26,7 +26,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h1>Export data</h1>
-                            <p>Select country and city to find suggested three hotels or check daily weather forecast</p>
+                            <p>Select country and city to find suggested three hotels or check daily weather forecast.</p>
                             <form action="{{ route('place.search') }}" class="needs-validation" method="post">
                                 @csrf
                                 <div class="row">

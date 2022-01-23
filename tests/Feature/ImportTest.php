@@ -15,16 +15,6 @@ class ImportTest extends TestCase
 {
     use DatabaseTransactions;
 
-    // protected $user;
-
-    protected function loginAsUser() 
-    {
-        $user = User::factory()->make();
-        // $this->user = $user;
-        $response = $this->actingAs($user);
-        return $response;
-    }
-
     /**
      * A basic feature test example.
      *

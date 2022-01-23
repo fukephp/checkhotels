@@ -32,7 +32,7 @@
 					        <div class="card bg-light mt-3 mb-3" style="width: 100%;">
 				                <div class="card-body">
 									<img src="https://maps.googleapis.com/maps/api/staticmap?size=300x300&maptype=roadmap\
-				&markers=size:mid%7Ccolor:red%7C{{ $clientHotel['name'] }}&key=AIzaSyAKpeS0-W6Sn4ie_XYoDXtPkQklnnep9RA" class="card-img-top mb-3">
+				&markers=size:mid%7Ccolor:red%7C{{ $clientHotel['name'] }}&key={{ env('GOOGLE_MAPS_STATIC_API_KEY') }}" class="card-img-top mb-3">
 				                    <h5 class="card-title">{{ $clientHotel['name'] }}</h5>
 				                    <h6 class="card-subtitle mb-2 text-muted">{!! $clientHotel['caption'] !!}</h6>
 				                </div>

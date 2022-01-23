@@ -68,8 +68,8 @@ class HotelClient
     protected static function connectClient($value) 
     {
         $client = 'hotels4';
-        $host = env('RAPIDAPI_HOTEL_HOST', 'x-rapidapi-host: hotels4.p.rapidapi.com');
-        $key = env('RAPIDAPI_KEY', 'x-rapidapi-key: ab7f802e0amshf8692a3e0dd106dp187dacjsnf1566aa8ff65');
+        $host = env('RAPIDAPI_HOTEL_HOST');
+        $key = env('RAPIDAPI_KEY');
 
         $rapidApiClient = new RapidApiClient($client, $host, $key);
         $response = $rapidApiClient->curlSetup($value);

@@ -15,13 +15,6 @@ class PlaceTest extends TestCase
 {
     use DatabaseTransactions;
 
-    protected function loginAsUser() 
-    {
-        $user = User::factory()->make();
-        $response = $this->actingAs($user);
-        return $response;
-    }
-
     /**
      * A find page places.
      *
@@ -82,7 +75,7 @@ class PlaceTest extends TestCase
     {
         $response = $this->loginAsUser();
 
-        $response->get('/')->assertSee('Select country and city to find suggested three hotels or check daily weather forecast')->assertSee('Choose country...');
+        $response->get('/')->assertSee('Select country and city to find suggested three hotels or check daily weather forecast.')->assertSee('Choose country...');
 
     }
 
@@ -149,8 +142,5 @@ class PlaceTest extends TestCase
             'client_weather' => json_encode($clientWeather),
             'export_weather_check' => 1
         ])->assertRedirect('/places/'.$place->id.'/view');
-
-        dd($response);
-
     }
 }

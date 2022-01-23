@@ -25,8 +25,8 @@ class WeatherClient
     protected static function connectClient($value) 
     {
         $client = 'weather';
-        $host = env('RAPIDAPI_WEATHER_HOST', 'x-rapidapi-host: community-open-weather-map.p.rapidapi.com');
-        $key = env('RAPIDAPI_KEY', 'x-rapidapi-key: ab7f802e0amshf8692a3e0dd106dp187dacjsnf1566aa8ff65');
+        $host = env('RAPIDAPI_WEATHER_HOST');
+        $key = env('RAPIDAPI_KEY');
 
         $rapidApiClient = new RapidApiClient($client, $host, $key);
         $response = $rapidApiClient->curlSetup($value);
