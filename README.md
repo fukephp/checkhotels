@@ -1,7 +1,7 @@
 # Feed data for places(with hotels, location and weather) Laravel project
 
 ## Roadmap 
-* :star: [Installation](#Introduction)
+* :star: [Introduction](#star-introduction)
 * :dart: [Laravel project requirements](#laravel-project-requirements-dart)
 * :gear:  [Installation/Configuration](#installation-configuration-open-book)
 * :rocket: [Project features](#project-features)
@@ -12,7 +12,7 @@
 * :speech_balloon: [Run the application tests](#)
 * :bookmark: [Logging channels](#logging-channels-bookmark)
 * :electric_plug: [Aditional libraries used in project](#)
-* :building_construction: [Project TODOs](#)
+* :building_construction: [Project TODOs](#building_construction-project-todos)
 
 ## :star: Introduction
 
@@ -99,9 +99,9 @@ Run tests using command `php artisan test` or `php artisan test --filter UserTes
 ## :bookmark: Logging channels
 Laravel provides robust logging services that allow you to log messages to files, the system error log.
 In `config/logging.php` there is registered new channels that runs when RapidAPI is used:
-- placeexportlog
-- placeexportdatalog
-- rapidapilog
+- placeexportlog (storage/logs/place_export.log)
+- placeexportdatalog (storage/logs/place_export_data.log)
+- rapidapilog (storage/logs/rapid_api.log)
 
 
 ## :electric_plug: Aditional libraries/packages used in project 
