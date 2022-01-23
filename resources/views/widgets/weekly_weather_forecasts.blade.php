@@ -1,3 +1,4 @@
+@if(!is_null($clientWeather))
 @if($clientWeather['cod'] == 200)
 	<div class="row">
 		<div class="col-lg-12">
@@ -34,4 +35,5 @@
 			</div>
 		</div>
 	</div>
+@endif
 @endif
