@@ -2,16 +2,16 @@
 
 ## Roadmap 
 * :star: [Introduction](#star-introduction)
-* :dart: [Laravel project requirements](#laravel-project-requirements-dart)
-* :gear:  [Installation/Configuration](#installation-configuration-open-book)
-* :rocket: [Project features](#project-features)
-* :spiral_notepad: [Import CSV file for places](#)
-* :clock6: [Commands with scheduler](#)
-	* [Export manual hotels](#)
-	* [Export schedule hotels](#)
-* :speech_balloon: [Run the application tests](#)
-* :bookmark: [Logging channels](#logging-channels-bookmark)
-* :electric_plug: [Aditional libraries used in project](#)
+* :dart: [Laravel project requirements](#dart-laravel-project-requirements)
+* :gear:  [Installation/Configuration](#gear--installationconfiguration)
+* :rocket: [Project features](#rocket-project-features)
+* :spiral_notepad: [Import CSV file for places](#spiral_notepad-import-csv-file-for-places)
+* :clock6: [Commands with scheduler](#spiral_notepad-import-csv-file-for-places)
+	* [Export manual hotels](#spiral_notepad-import-csv-file-for-places)
+	* [Export schedule hotels](#export-schedule-hotels)
+* :speech_balloon: [Run the application tests](#speech_balloon-run-the-application-tests)
+* :bookmark: [Logging channels](#bookmark-logging-channels)
+* :electric_plug: [Aditional libraries used in project](#electric_plug-aditional-librariespackages-used-in-project)
 * :building_construction: [Project TODOs](#building_construction-project-todos)
 
 ## :star: Introduction
