@@ -38,23 +38,14 @@
                                                 <option value="{{ $country }}" {{ old('country') == $country ? 'selected' : '' }}>{{ $country }}</option>
                                             @endforeach
                                         </select>
-                                        {{-- <div class="invalid-feedback">
-                                            Please select a valid country.
-                                        </div> --}}
                                     </div>
                                     <div class="col-md-4 mb-3">
                                         <label for="city">City</label>
                                         <input type="text" name="city" class="form-control" id="city" placeholder="" value="{{ old('city') }}">
-                                        {{-- <div class="invalid-feedback">
-                                            Please provide a valid city.
-                                        </div> --}}
                                     </div>
                                     <div class="col-md-3 mb-3">
                                         <label for="date">Date</label>
                                         <input type="date" name="date" class="form-control" id="date" placeholder="" value="{{ old('date') }}">
-                                        {{-- <div class="invalid-feedback">
-                                            Date code required.
-                                        </div> --}}
                                     </div>
                                     <div class="col-md-12">
                                         <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
@@ -69,9 +60,16 @@
         @endauth
 
         @guest
-        <div class="bg-light p-5 rounded">
-        <h1>Homepage</h1>
-            <p class="lead">Your viewing the home page. Please login to view the restricted data.</p>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="bg-light p-5 mb-3 rounded">
+                    <h1>Using export/import places?</h1>
+                    <p>First you need to login or register.</p>
+                    <a href="{{ route('login.show') }}" class="btn btn-outline-primary btn-lg">Login</a>
+                    <span class="mr-3 ml-3">Or</span>
+                    <a href="{{ route('register.show') }}" class="btn btn-outline-primary btn-lg">Register</a>
+                </div>
+            </div>
         </div>
         @endguest
 @endsection

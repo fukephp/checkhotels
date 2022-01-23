@@ -47,6 +47,11 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
         Route::post('/places/{id}/export/hotels/store', 'PlaceController@exportHotelStore')->name('place.hotel.export.store');
         Route::post('/places/search', 'PlaceController@search')->name('place.search');
         /**
+         * Hotels
+         */
+        Route::get('/hotels', 'HotelController@index')->name('hotel.index');
+        Route::post('/hotels', 'HotelController@search')->name('hotel.search');
+        /**
          * Import csv
          */
         Route::get('/import', 'ImportController@index')->name('import.index');

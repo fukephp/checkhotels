@@ -50,7 +50,7 @@ class PlaceManualExportCommand extends Command
         $implode_countries = implode(', ', $countries);
         $implode_cities = implode(', ', $countries);
         // Step 1
-        $choiceGetPlacesWithCondition = $this->choice('Get all places without conditions', ['yes', 'no'], 'yes');
+        $choiceGetPlacesWithCondition = $this->choice('Get all places with conditions', ['yes', 'no'], 'yes');
         // Step 2
         if($choiceGetPlacesWithCondition == 'yes') {
             // Step 3
