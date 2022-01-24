@@ -52,9 +52,10 @@ GOOGLE_MAPS_STATIC_API_KEY="AIzaSyAKpeS0-W6Sn4ie_XYoDXtPkQklnnep9RA"
 ```
 
 - Run/Serve the application on the PHP development server use command `php artisan serve` 
+- Use csv file that is located `public/csv/placesdata.csv` and register or login with seed user, then in homepage go to Import CSV data for places link and use upload form
 
 ## :rocket: Project features
-- Login/register user
+- Login/Register user
 - Create/Import CSV for places(columns: country, city, and date)
 - Export data form with inputs: country, city, date (Fill all inputs store as place and find suggested three hotels or check daily weather forecast using RapidAPI.)
 - Hotel list with filter(search by country or city)
@@ -82,9 +83,9 @@ This command is used when you want to select data with conditions:
 
 ### Export schedule hotels
 This command is used in scheduler it export all data using RapidAPIs for hotels and weather
-**Hint** To see scheduler list command use `php artisan schedule:list`
+**Hint:** To see scheduler list command use `php artisan schedule:list`
 To active scheduler use command `php artisan schedule:run`
-**Hint** Schaduler time interval 6 hours when againg command will be executed
+**Hint:** Schaduler time interval 6 hours when againg command will be executed
 
 ## :speech_balloon: Run the application tests
 Project have intergated unit tests for all requests in project
@@ -109,10 +110,10 @@ In `config/logging.php` there is registered new channels that runs when RapidAPI
 - Composer packages:
 	- [glhd/laravel-dumper](https://github.com/glhd/laravel-dumper) v0.1.0
 	- [Monarobase Country List](https://github.com/Monarobase/country-list) v3.2
-- Bootstrap framework libary (https://getbootstrap.com/docs/4.6/getting-started/introduction/) version 4.6
-- Datatables (https://datatables.net/)
-- Google maps API static images (https://developers.google.com/maps/documentation/maps-static/overview)
-- Masonry grid layout library https://masonry.desandro.com/
+- [Bootstrap CSS framework libary](https://getbootstrap.com/docs/4.6/getting-started/introduction/) version 4.6
+- [Datatables](https://datatables.net/)
+- [Google maps API static images](https://developers.google.com/maps/documentation/maps-static/overview)
+- [Masonry grid layout library](https://masonry.desandro.com/)
 
 ## :building_construction: Project TODOs
 - :x: Implement new api endpoint using RapidAPI:
