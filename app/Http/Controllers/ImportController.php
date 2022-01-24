@@ -103,7 +103,7 @@ class ImportController extends Controller
             unlink($filename);
             // Send log
             Log::channel('placeimportlog')->info('Import '.$filename.' is deleted.');
-            return back()->with('success','Places are successfully stored!');
+            return redirect()->route('place.index')->with('success','Places are successfully stored!');
         }
 
         return back()->with('error', 'Failed!');

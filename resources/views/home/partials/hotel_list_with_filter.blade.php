@@ -11,6 +11,7 @@
         <div class="bg-light mt-4 p-5 rounded">
             <h1>Hotels</h1>
             <p class="lead">Find hotels in selected town or city.</p>
+            <a href="{{ route('home.index') }}" class="btn btn-outline-primary btn-lg">Export data from RapidAPI</a>
         </div>
     </div>
 </div>
