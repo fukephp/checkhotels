@@ -89,10 +89,10 @@ To active scheduler use command `php artisan schedule:run`
 ## :speech_balloon: Run the application tests
 Project have intergated unit tests for all requests in project
 Tests are separated in files(`/tests/Feature/*`):
-- UserTest
-- HotelTest
-- ImportTest
-- PlaceTest
+- UserTest.php
+- HotelTest.php
+- ImportTest.php
+- PlaceTest.php
 
 Run tests using command `php artisan test` or `php artisan test --filter UserTest`
 
@@ -119,3 +119,4 @@ In `config/logging.php` there is registered new channels that runs when RapidAPI
 - :x: After exporting covid data from RapidAPI create migrations(new table covid_status_counties)
 - :x: When migrations are done update places for additional data about country covid status
 - :white_check_mark: ~~Hotels list with filter~~
+- :x: Unit test hotels requests
