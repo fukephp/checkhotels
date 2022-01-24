@@ -16,22 +16,25 @@ class ImportTest extends TestCase
     use DatabaseTransactions;
 
     /**
-     * A basic feature test example.
-     *
+     * Test logged user can see this page
      * @return void
      */
     public function test_it_user_can_see_import_page()
     {
-        $response = $this->loginAsUser();
+        $this->loginAsUser();
 
         $response = $this->get('/import');
 
         $response->assertStatus(200);
     }
 
+    /**
+     * Test upload csv file in importform 
+     * @return [type] [description]
+     */
     public function test_it_user_can_upload_csv_file_in_import_page()
     {
-        $response = $this->loginAsUser();
+        $this->loginAsUser();
 
         Storage::fake('public');
 
@@ -42,5 +45,18 @@ class ImportTest extends TestCase
         ]);
 
         Storage::disk('public')->assertExists('csv/placescsv.csv');
-    }
+    } 
+
+    /**
+     * Test can user click import button
+     * @return [type] [description]
+     */
+    public function test_it_user_can_import_uploaded_csv_file()
+    {
+        $this->loginAsUser();
+
+        $import = Import::factory()->create();
+
+        $response = $this->get('/import/store_palaces/'.$import->id)->assertStatus(500)->assertRedirect('/'); //302
+    } 
 }

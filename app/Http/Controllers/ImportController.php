@@ -54,6 +54,7 @@ class ImportController extends Controller
     public function storePlaces($id)
     {
         $import = Import::findOrFail($id);
+        $places = Place::all();
         $filename = storage_path('/app/public/'.$import->path);
         $file = fopen($filename, "r");
         $i=0;
@@ -81,16 +82,21 @@ class ImportController extends Controller
                 $destination_id = $clientHotels[0]['destinationId'];
                 $geo_id = $clientHotels[0]['geoId'];
             }
-            $place = new Place;
-            $place->api_destination_id = $destination_id;
-            $place->api_geo_id = $geo_id;
-            $place->country = $country;
-            $place->city = $city;
-            $place->date = $formated_date;
+            
+            if(!$places->contains('city', $city)) {
+                $place = new Place;
+                $place->api_destination_id = $destination_id;
+                $place->api_geo_id = $geo_id;
+                $place->country = $country;
+                $place->city = $city;
+                $place->date = $formated_date;
 
-            if($place->save()) {
-                // Send log
-                Log::channel('placeimportlog')->info('Place ('. $place->city .', '.$place->country.') is stored from CSV import');
+                if($place->save()) {
+                    // Send log
+                    Log::channel('placeimportlog')->info('Place ('. $place->city .', '.$place->country.') is stored from CSV import');
+                } else {
+                    Log::channel('placeimportlog')->info('Place ('. $place->city .', '.$place->country.') is already exists in database.');
+                }
             }
             
         }

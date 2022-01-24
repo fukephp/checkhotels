@@ -18,8 +18,8 @@ use Illuminate\Http\Request;
 class PlaceController extends Controller
 {
     /**
+     * Table list of places
      * @test test_places_page
-     * @return [type] [description]
      */
     public function index()
     {
@@ -28,8 +28,7 @@ class PlaceController extends Controller
     }
 
     /**
-     * [view description]
-     * @param  [int] $id [place_id]
+     * View place with hotels list
      */
     public function view($id)
     {
@@ -38,8 +37,7 @@ class PlaceController extends Controller
     } 
 
     /**
-     * [create description]
-     * @return [type] [description]
+     * Create place page (disabled)
      */
     public function create()
     {
@@ -47,10 +45,8 @@ class PlaceController extends Controller
     } 
 
     /**
-     * [store description]
+     * Store new place (disabled)
      * @test test_it_store_new_place_with_error_required_fields
-     * @param  StorePlaceRequest $request [description]
-     * @return [type]                     [description]
      */
     public function store(StorePlaceRequest $request)
     {
@@ -65,6 +61,11 @@ class PlaceController extends Controller
         }
     } 
 
+    /**
+     * Export place using RapidAPI to store data for hotels and weather
+     * @test test_it_user_can_submit_export_form_with_error_required_fields
+     * @test test_it_user_can_submit_export_form
+     */
     public function export(ExportPlaceRequest $request)
     {
         $data = $request->validated();
@@ -95,6 +96,10 @@ class PlaceController extends Controller
         }
     }
 
+    /**
+     * Search of hotel that are recomended by RapidAPI
+     * @test test_it_user_can_see_page_export_hotels
+     */
     public function exportHotel($id)
     {
         $place = Place::findOrFail($id);
@@ -103,6 +108,10 @@ class PlaceController extends Controller
         return view('place.export_hotel', compact('place', 'clientHotels', 'clientWeather'));
     } 
 
+    /**
+     * Store hotels that are recommeded by RapidAPI
+     * @test test_it_user_can_submit_place_export_hotels
+     */
     public function exportHotelStore(Request $request, $id)
     {
         $place = Place::findOrFail($id);
@@ -173,6 +182,10 @@ class PlaceController extends Controller
         return redirect()->route('place.view', $place->id)->with('success', $message);
     }
 
+    /**
+     * Place edit page (disabled)
+     * @test
+     */
     public function edit($id)
     {
         $place = Place::findOrFail($id);
@@ -180,6 +193,10 @@ class PlaceController extends Controller
         return view('place.edit', compact('place'));
     } 
 
+    /**
+     * Delete place in /place table list
+     * @test test_it_user_can_delete_single_place
+     */
     public function delete($id)
     {
         $place = Place::findOrFail($id);
@@ -189,6 +206,10 @@ class PlaceController extends Controller
         }
     } 
 
+    /**
+     * Update place form request (disabled)
+     * @test
+     */
     public function update(UpdatePlaceRequest $request, $id)
     {
         $place = Place::find($id);

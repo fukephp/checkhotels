@@ -21,12 +21,12 @@ Laravel project using RapidAPis for scraping data from hosts:
 - https://rapidapi.com/community/api/open-weather-map/
 
 ## :dart: Laravel project requirements
-- **php**: 7.3|8.0v
+- **php**: v7.3|v8.0
 - **db**: mysql
-- **laravel/framework**: 8.75v
-- **bootstrap libary**: 4.6.1v
-- **jquery libary**: 3.5.1v
-- **datatables libary**: 1.11.3v
+- **laravel/framework**: v8.75
+- **bootstrap libary**:  v4.6.1
+- **jquery libary**: v3.5.1
+- **datatables libary**: v1.11.3
 
 ## :gear:  Installation/Configuration
 
@@ -56,7 +56,7 @@ GOOGLE_MAPS_STATIC_API_KEY="AIzaSyAKpeS0-W6Sn4ie_XYoDXtPkQklnnep9RA"
 ## :rocket: Project features
 - Login/register user
 - Create/Import CSV for places(columns: country, city, and date)
-- Export data form with inputs: country, city, date (Select country and city to find suggested three hotels or check daily weather forecast.)
+- Export data form with inputs: country, city, date (Fill all inputs store as place and find suggested three hotels or check daily weather forecast using RapidAPI.)
 - Hotel list with filter(search by country or city)
 - Places table list
 - View single place with list of hotels and weather information
@@ -107,7 +107,8 @@ In `config/logging.php` there is registered new channels that runs when RapidAPI
 ## :electric_plug: Aditional libraries/packages used in project 
 
 - Composer packages:
-	- glhd/laravel-dumper (https://github.com/glhd/laravel-dumper) version 0.1.0
+	- [glhd/laravel-dumper](https://github.com/glhd/laravel-dumper) v0.1.0
+	- [Monarobase Country List](https://github.com/Monarobase/country-list) v3.2
 - Bootstrap framework libary (https://getbootstrap.com/docs/4.6/getting-started/introduction/) version 4.6
 - Datatables (https://datatables.net/)
 - Google maps API static images (https://developers.google.com/maps/documentation/maps-static/overview)
@@ -119,4 +120,4 @@ In `config/logging.php` there is registered new channels that runs when RapidAPI
 - :x: After exporting covid data from RapidAPI create migrations(new table covid_status_counties)
 - :x: When migrations are done update places for additional data about country covid status
 - :white_check_mark: ~~Hotels list with filter~~
-- :x: Unit test hotels requests
+- :white_check_mark: ~~Unit test hotels requests~~
