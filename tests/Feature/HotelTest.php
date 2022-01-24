@@ -21,4 +21,20 @@ class HotelTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    public function test_it_user_can_user_filter_form_without_fill_input()
+    {
+        $response = $this->loginAsUser();
+
+        $response = $this->from('/hotels')->post('/hotels', 
+            [
+                'country' => '',
+                'city' => ''
+            ]
+        );
+
+        $response->assertRedirect('/hotels');
+
+
+    } 
 }

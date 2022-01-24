@@ -11,12 +11,22 @@ use Illuminate\Http\Request;
 
 class HotelController extends Controller
 {
-	public function index()
+	public function index(Request $request)
 	{
+		$filter_city = '';
+		if(isset($request->city)) {
+			$filter_city = $request->city;
+		}
 		$countries = Place::all()->pluck('country')->unique();
         $cities = Place::all()->pluck('city')->unique();
-        $hotels = Hotel::all();
-        return view('hotel.index', compact('countries', 'cities', 'hotels'));
+        if($filter_city != '') {
+        	$hotels = Hotel::whereHas('place', function($q) use ($filter_city) {
+	        	$q->where('city', $filter_city);
+	        })->get();
+        } else {
+        	$hotels = Hotel::all();
+        }
+        return view('hotel.index', compact('countries', 'cities', 'hotels', 'filter_city'));
 	} 
     public function search(SearchHotelRequest $request)
     {

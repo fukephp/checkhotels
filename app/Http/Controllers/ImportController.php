@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Custom\HotelClient;
 use App\Http\Requests\ImportCsvRequest;
 use App\Models\Import;
 use App\Models\Place;
-use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ImportController extends Controller
 {
@@ -67,13 +69,34 @@ class ImportController extends Controller
             $country = $data[0];
             $city = $data[1];
             $date = $data[2];
+            $full_name = $city.', '.$country;
             // Date needs to be formated
             $formated_date = Carbon::createFromFormat('d.m.y', $date)->format('Y-m-d');
-            Place::create(['country' => $country, 'city' => $city, 'date' => $formated_date]);
+            $clientHotels = HotelClient::searchByGroup($full_name, null, 'CITY_GROUP', $limit = 1);
+            $destination_id = '';
+            $geo_id = '';
+            if(!empty($clientHotels)) {
+                $destination_id = $clientHotels[0]['destinationId'];
+                $geo_id = $clientHotels[0]['geoId'];
+            }
+            $place = new Place;
+            $place->api_destination_id = $destination_id;
+            $place->api_geo_id = $geo_id;
+            $place->country = $country;
+            $place->city = $city;
+            $place->date = $formated_date;
+
+            if($place->save()) {
+                // Send log
+                Log::channel('placeimportlog')->info('Place ('. $place->city .', '.$place->country.') is stored from CSV import');
+            }
+            
         }
         // After places are created remove csv and import record
         if($import->delete()) {
             unlink($filename);
+            // Send log
+            Log::channel('placeimportlog')->info('Import '.$filename.' is deleted.');
             return back()->with('success','Places are successfully stored!');
         }
 
@@ -92,9 +115,10 @@ class ImportController extends Controller
         // After places are created remove csv and import record
         if($import->delete()) {
             unlink($filename);
+            // Send log
+            Log::channel('placeimportlog')->info('Import '.$filename.' is deleted.');
             return back()->with('success','Import is removed!');
         }
-
         return back()->with('error', 'Failed!');
 
     }  

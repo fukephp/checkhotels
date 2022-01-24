@@ -9,8 +9,8 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h1>Places</h1>
-                            <p>Create new place manualy or import csv for places(columns: country, city, and date)</p>
-                            <a href="{{ route('place.create') }}" class="btn btn-outline-primary btn-lg">Create new place</a>
+                            <p>Import csv for places(columns: country, city, and date)</p>
+                            <a href="{{ route('place.index') }}" class="btn btn-outline-primary btn-lg">List all places</a>
                             <span class="mr-3 ml-3">Or</span>
                             <a href="{{ route('import.index') }}" class="btn btn-outline-primary btn-lg">Import CSV data for places</a>
 
@@ -25,8 +25,8 @@
                     <!-- Find hotels -->
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1>Export data</h1>
-                            <p>Select country and city to find suggested three hotels or check daily weather forecast.</p>
+                            <h1>Export data from RapidAPI</h1>
+                            <p>Select country and city to create a new place and find suggested three hotels or check daily weather forecast.</p>
                             <form action="{{ route('place.search') }}" class="needs-validation" method="post">
                                 @csrf
                                 <div class="row">
@@ -34,7 +34,7 @@
                                         <label for="country">Country</label>
                                         <select name="country" class="custom-select d-block w-100" id="country">
                                             <option value="">Choose country...</option>
-                                            @foreach($countries as $country)
+                                            @foreach($countries as $key => $country)
                                                 <option value="{{ $country }}" {{ old('country') == $country ? 'selected' : '' }}>{{ $country }}</option>
                                             @endforeach
                                         </select>

@@ -114,6 +114,12 @@ return [
             'path' => storage_path('logs/laravel.log'),
         ],
 
+        'placeimportlog' => [
+            'level' => 'debug',
+            'driver' => 'single',
+            'path' => storage_path('logs/place_import.log'),
+        ],
+
         'placeexportlog' => [
             'level' => 'debug',
             'driver' => 'single',

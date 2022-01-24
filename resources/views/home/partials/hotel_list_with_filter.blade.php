@@ -39,10 +39,15 @@
 			@foreach($hotels as $hotel)
 		    	<div class="card bg-light" style="">
 		            <div class="card-body">
-		                <img src="https://maps.googleapis.com/maps/api/staticmap?size=300x300&maptype=roadmap\
-		&markers=size:mid%7Ccolor:red%7C{{ $hotel->name }}&key={{ env('GOOGLE_MAPS_STATIC_API_KEY') }}" class="card-img-top mb-3">
+		                <img src="https://maps.googleapis.com/maps/api/staticmap?center={{ $hotel->lat }},{{ $hotel->long }}&markers=color:red%7Clabel:C%7C{{ $hotel->lat }},{{ $hotel->long }}&zoom=18&size=300x300&key={{ env('GOOGLE_MAPS_STATIC_API_KEY') }}" class="card-img-top mb-3">
 		                <h5 class="card-title">{!! $hotel->name !!}</h5>
 		                <h6 class="card-subtitle mb-2 text-muted">{!! $hotel->place->city. ', ' .$hotel->place->country !!}</h6>
+		                <p class="card-text">
+		                	@include('hotel.partials.star_rating', ['star_rating' => $hotel->star_rating])
+		                </p>
+		                <p class="card-text text-muted">
+		                	{{ $hotel->price }}
+		                </p>
 		            </div>
 		        </div>
 		    @endforeach
