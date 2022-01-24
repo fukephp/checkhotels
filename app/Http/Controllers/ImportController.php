@@ -65,10 +65,8 @@ class ImportController extends Controller
                 continue;
             }
             // Create new place
-            // Csv columns
-            // data[0] -> country, 
-            // data[1] -> city, 
-            // data[2] -> date, 
+            // Csv columns:
+            // data[0] -> country, data[1] -> city, data[2] -> date, 
             $country = $data[0];
             $city = $data[1];
             $date = $data[2];
@@ -76,17 +74,17 @@ class ImportController extends Controller
             // Date needs to be formated
             $formated_date = Carbon::createFromFormat('d.m.y', $date)->format('Y-m-d');
             $clientHotels = HotelClient::searchByGroup($full_name, null, 'CITY_GROUP', $limit = 1);
-            $destination_id = '';
-            $geo_id = '';
+            $destination_id = null;
+            $geo_id = null;
             if(!empty($clientHotels)) {
-                $destination_id = $clientHotels[0]['destinationId'];
-                $geo_id = $clientHotels[0]['geoId'];
+                $destination_id = intval($clientHotels[0]['destinationId']);
+                $geo_id = intval($clientHotels[0]['geoId']);
             }
             
             if(!$places->contains('city', $city)) {
                 $place = new Place;
                 $place->api_destination_id = $destination_id;
-                $place->api_geo_id = $geo_id;
+                $place->api_geo_id = $destination_id;
                 $place->country = $country;
                 $place->city = $city;
                 $place->date = $formated_date;

@@ -31,10 +31,10 @@ Laravel project using RapidAPis for scraping data from hosts:
 ## :gear:  Installation/Configuration
 
 - When project is cloned first copy `.env.example` and create `.env` file in root of project.
-- Set the application key `php artisan key:generate`
 - Update `composer.json` using `composer update`
+- Set the application key `php artisan key:generate`
 - Setup database configuration in `.env` file and migrate database `php artisan migrate` 
-- Create new user use seed `php artisan seed --class=UserTableSeeder`
+- Create new user use seed `php artisan db:seed --class=UserTableSeeder`
 - Setup RapidAPI confiugration values in .env file `RAPIDAPI_HOTEL_HOST, RAPIDAPI_WEATHER_HOST, and RAPIDAPI_KEY`
 ```
 RAPIDAPI_HOTEL_HOST="x-rapidapi-host: hotels4.p.rapidapi.com" 
