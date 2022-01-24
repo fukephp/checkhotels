@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Custom\HotelClient;
 use App\Custom\WeatherClient;
+use App\Http\Requests\ExportPlaceRequest;
 use App\Http\Requests\ImportCsvRequest;
 use App\Http\Requests\SearchPlaceRequest;
 use App\Http\Requests\StorePlaceRequest;
@@ -16,23 +17,41 @@ use Illuminate\Http\Request;
 
 class PlaceController extends Controller
 {
+    /**
+     * @test test_places_page
+     * @return [type] [description]
+     */
     public function index()
     {
         $places = Place::all();
         return view('place.index', compact('places'));
     }
 
+    /**
+     * [view description]
+     * @param  [int] $id [place_id]
+     */
     public function view($id)
     {
         $place = Place::findOrFail($id);
         return view('place.view', compact('place'));
     } 
 
+    /**
+     * [create description]
+     * @return [type] [description]
+     */
     public function create()
     {
         return view('place.create');
     } 
 
+    /**
+     * [store description]
+     * @test test_it_store_new_place_with_error_required_fields
+     * @param  StorePlaceRequest $request [description]
+     * @return [type]                     [description]
+     */
     public function store(StorePlaceRequest $request)
     {
         if($request->validated()) {
@@ -46,7 +65,7 @@ class PlaceController extends Controller
         }
     } 
 
-    public function search(SearchPlaceRequest $request)
+    public function export(ExportPlaceRequest $request)
     {
         $data = $request->validated();
         $country = $data['country'];

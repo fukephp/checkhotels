@@ -30,7 +30,7 @@
 @foreach($places as $place)
     <div class="col-lg-4">
         <div class="card bg-light mt-3" style="width: 100%;">
-            <div class="card-body">
+            <div class="card-body text-center">
                 <h5 class="card-title">{{ $place->city }}</h5>
                 <h6 class="card-subtitle mb-2 text-muted">{{ $place->country }}</h6>
             </div>

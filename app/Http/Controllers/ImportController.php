@@ -14,7 +14,7 @@ class ImportController extends Controller
 {
     /**
      * List all imports
-     * @return [type] [description]
+     * @test test_it_user_can_see_import_page
      */
     public function index()
     {
@@ -33,8 +33,7 @@ class ImportController extends Controller
 
     /**
      * Store csv file in storage/app/public/csv
-     * @param  ImportCsvRequest $request [description]
-     * @return [type]                    [description]
+     * @test test_it_user_can_upload_csv_file_in_import_page
      */
     public function importStore(ImportCsvRequest $request)
     {
@@ -48,7 +47,10 @@ class ImportController extends Controller
         }
     }
 
-    // Store places from selected import csv file
+    /**
+     * Store places from selected import csv file
+     * @test 
+     */
     public function storePlaces($id)
     {
         $import = Import::findOrFail($id);
@@ -105,8 +107,7 @@ class ImportController extends Controller
 
     /**
      * Remove import also remove file in storage/app/public/csv/...
-     * @param  [type] $id [description]
-     * @return [type]     [description]
+     * @test
      */
     public function delete($id)
     {

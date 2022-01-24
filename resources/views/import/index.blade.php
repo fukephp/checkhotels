@@ -12,7 +12,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h1>Import CSV data</h1>
-                    <p>Here store data for places (columns must be country, city, and date)</p>
+                    <p>Store data for places (columns must be country, city, and date)</p>
                     <form action="{{ route('import.perform') }}" method="post" enctype="multipart/form-data">
                     	@csrf
 						<div class="input-group mb-3">

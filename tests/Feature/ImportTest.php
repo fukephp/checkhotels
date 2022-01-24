@@ -20,7 +20,7 @@ class ImportTest extends TestCase
      *
      * @return void
      */
-    public function test_import_page()
+    public function test_it_user_can_see_import_page()
     {
         $response = $this->loginAsUser();
 

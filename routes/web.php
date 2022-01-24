@@ -48,7 +48,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
         Route::get('/places/{id}/delete', 'PlaceController@delete')->name('place.delete');
         Route::get('/places/{id}/export/hotels', 'PlaceController@exportHotel')->name('place.hotel.export');
         Route::post('/places/{id}/export/hotels/store', 'PlaceController@exportHotelStore')->name('place.hotel.export.store');
-        Route::post('/places/search', 'PlaceController@search')->name('place.search');
+        Route::post('/places/export', 'PlaceController@export')->name('place.export');
         /**
          * Hotels
          */

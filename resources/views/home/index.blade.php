@@ -8,8 +8,8 @@
                     <!-- Find places -->
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1>Places</h1>
-                            <p>Import csv for places(columns: country, city, and date)</p>
+                            <h1>Import CSV data</h1>
+                            <p>Store data for places (columns must be country, city, and date)</p>
                             <a href="{{ route('place.index') }}" class="btn btn-outline-primary btn-lg">List all places</a>
                             <span class="mr-3 ml-3">Or</span>
                             <a href="{{ route('import.index') }}" class="btn btn-outline-primary btn-lg">Import CSV data for places</a>
@@ -27,7 +27,7 @@
                         <div class="col-lg-12">
                             <h1>Export data from RapidAPI</h1>
                             <p>Select country and city to create a new place and find suggested three hotels or check daily weather forecast.</p>
-                            <form action="{{ route('place.search') }}" class="needs-validation" method="post">
+                            <form action="{{ route('place.export') }}" class="needs-validation" method="post">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-5 mb-3">
