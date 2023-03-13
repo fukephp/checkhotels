@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Custom\HotelClient;
 use App\Custom\WeatherClient;
+use App\Http\Requests\ExportPlaceRequest;
 use App\Http\Requests\ImportCsvRequest;
 use App\Http\Requests\SearchPlaceRequest;
 use App\Http\Requests\StorePlaceRequest;
+use App\Http\Requests\UpdatePlaceRequest;
 use App\Models\Hotel;
 use App\Models\Place;
 use App\Models\Weather;
@@ -15,24 +17,37 @@ use Illuminate\Http\Request;
 
 class PlaceController extends Controller
 {
+    /**
+     * Table list of places
+     * @test test_places_page
+     */
     public function index()
     {
         $places = Place::all();
         return view('place.index', compact('places'));
     }
 
+    /**
+     * View place with hotels list
+     */
     public function view($id)
     {
         $place = Place::findOrFail($id);
-        $clientHotels = HotelClient::searchByGroup($place->city, 'HOTEL_GROUP', $limit = 3);
-        return view('place.view', compact('place', 'clientHotels'));
+        return view('place.view', compact('place'));
     } 
 
+    /**
+     * Create place page (disabled)
+     */
     public function create()
     {
         return view('place.create');
     } 
 
+    /**
+     * Store new place (disabled)
+     * @test test_it_store_new_place_with_error_required_fields
+     */
     public function store(StorePlaceRequest $request)
     {
         if($request->validated()) {
@@ -46,31 +61,57 @@ class PlaceController extends Controller
         }
     } 
 
-    public function search(SearchPlaceRequest $request)
+    /**
+     * Export place using RapidAPI to store data for hotels and weather
+     * @test test_it_user_can_submit_export_form_with_error_required_fields
+     * @test test_it_user_can_submit_export_form
+     */
+    public function export(ExportPlaceRequest $request)
     {
         $data = $request->validated();
-        $places = Place::where(function($query) use ($data) {
-            if(is_null($data['country']) && $data['city'] != '') {
-                $query->where('city', $data['city']);
-            } else {
-                $query->where('country', $data['country'])
-                    ->orWhere('city', $data['city'])
-                    ->orWhere('date', $data['date']);
-            }
-            
-        })->get();
-        // $places = Place::where('city', $data['city'])->where('country', $data['country'])->get();
-        return view('place.search', compact('places', 'data'));
+        $country = $data['country'];
+        $city = $data['city'];
+        $date = $data['date'];
+        $full_name = $city.', '.$country;
+        // Date needs to be formated
+        $formated_date = \Carbon\Carbon::createFromFormat('Y-m-d', $date)->format('Y-m-d');
+        $clientHotels = HotelClient::searchByGroup($full_name, null, 'CITY_GROUP', $limit = 1);
+        $destination_id = null;
+        $geo_id = null;
+        if(!empty($clientHotels)) {
+            $destination_id = intval($clientHotels[0]['destinationId']);
+            $geo_id = intval($clientHotels[0]['geoId']);
+        }
+        $place = Place::firstOrCreate([
+            'api_destination_id' => $destination_id,
+            'api_geo_id' => $geo_id,
+            'country' => $country,
+            'city' => $city,
+            'date' => $formated_date,
+        ]);
+
+        // Store new place with destination id
+        if($place->save()) {
+            return redirect()->route('place.hotel.export', $place->id);
+        }
     }
 
+    /**
+     * Search of hotel that are recomended by RapidAPI
+     * @test test_it_user_can_see_page_export_hotels
+     */
     public function exportHotel($id)
     {
         $place = Place::findOrFail($id);
-        $clientHotels = HotelClient::searchByGroup($place->city, 'HOTEL_GROUP', $limit = 3);
+        $clientHotels = HotelClient::searchByGroup($place->api_destination_id, $place->date->format('Y-m-d'), 'HOTEL_GROUP', $limit = 3);
         $clientWeather = WeatherClient::currentWeather($place->city);
         return view('place.export_hotel', compact('place', 'clientHotels', 'clientWeather'));
     } 
 
+    /**
+     * Store hotels that are recommeded by RapidAPI
+     * @test test_it_user_can_submit_place_export_hotels
+     */
     public function exportHotelStore(Request $request, $id)
     {
         $place = Place::findOrFail($id);
@@ -106,18 +147,26 @@ class PlaceController extends Controller
         if(!empty($request->client_hotels)) {
             foreach($request->client_hotels as $client_hotel) {
                 $client_hotel = json_decode($client_hotel);
-                $name = $client_hotel->name;
-                $caption = strip_tags($client_hotel->caption);
-                $lat = $client_hotel->latitude;
-                $long = $client_hotel->longitude;
                 // Check if hotel exists
-                if(!$place->hotels()->haveHotel($name)->exists()) {
+                if(!$place->hotels()->haveHotel($client_hotel->name)->exists()) {
                     // Save new hotel
                     $new_hotel = new Hotel;
-                    $new_hotel->name = $name;
-                    $new_hotel->caption = $caption;
-                    $new_hotel->lat = $lat;
-                    $new_hotel->long = $long;
+                    $new_hotel->api_hotel_id = $client_hotel->api_hotel_id;
+                    $new_hotel->name = $client_hotel->name;
+                    $new_hotel->price = $client_hotel->price;
+                    $new_hotel->guest_review_txt = $client_hotel->guest_review_txt;
+                    $new_hotel->guest_review_num = $client_hotel->guest_review_num;
+                    $new_hotel->star_rating = $client_hotel->star_rating;
+                    $new_hotel->lat = $client_hotel->lat;
+                    $new_hotel->long = $client_hotel->long;
+                    $new_hotel->street_address = $client_hotel->street_address;
+                    $new_hotel->extended_address = $client_hotel->extended_address;
+                    $new_hotel->locality = $client_hotel->locality;
+                    $new_hotel->postal_code = $client_hotel->postal_code;
+                    $new_hotel->region = $client_hotel->region;
+                    $new_hotel->country_name = $client_hotel->country_name;
+                    $new_hotel->country_code = $client_hotel->country_code;
+                    $new_hotel->thumbnail_url = $client_hotel->thumbnail_url;
                     // Save new hotel assign to current place
                     $place->hotels()->save($new_hotel);
                 } else {
@@ -131,5 +180,47 @@ class PlaceController extends Controller
             $message = 'Hotels and weekly weather are submitted! '.$reportMessage;
         }
         return redirect()->route('place.view', $place->id)->with('success', $message);
+    }
+
+    /**
+     * Place edit page (disabled)
+     * @test
+     */
+    public function edit($id)
+    {
+        $place = Place::findOrFail($id);
+
+        return view('place.edit', compact('place'));
+    } 
+
+    /**
+     * Delete place in /place table list
+     * @test test_it_user_can_delete_single_place
+     */
+    public function delete($id)
+    {
+        $place = Place::findOrFail($id);
+
+        if($place->delete()) {
+            return redirect()->back()->with('success', 'Place deleted!');
+        }
+    } 
+
+    /**
+     * Update place form request (disabled)
+     * @test
+     */
+    public function update(UpdatePlaceRequest $request, $id)
+    {
+        $place = Place::find($id);
+        $place->city = $request->city;
+        $place->country = $request->country;
+        $place->date = $request->date;
+
+        if($place->save()) {
+            return redirect()->back()->with('success', 'Place updated!');
+        } else {
+            return redirect()->back()->with('error', 'Place cannot be saved!');
+        }
     }
 }

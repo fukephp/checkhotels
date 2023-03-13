@@ -10,20 +10,23 @@ use App\Custom\RapidApiClient;
  */
 class HotelClient 
 {
-    public static function searchByGroup($value, $group, $limit = 0) 
+    public static function searchByGroup($value, $check_in_date = null, $group = null, $limit = 0) 
     {
-        $value = mb_strtolower($value, 'UTF-8');
+        $response = self::connectClient($value, $check_in_date);
 
-        $value = iconv('UTF-8','ASCII//TRANSLIT',$value);
-
-        $response = self::connectClient($value);
-
+        // Response data when HOTEL_GROUP is selected
+        if(isset($response['result'])) {
+            if($response['result'] == 'OK') {
+                if(!empty($response['data'])) {
+                    $result = $response['data']['body']['searchResults']['results'];
+                    $result = self::newResultCollection($result);
+                    return $result;
+                }
+            }
+        }
+        
         // Get suggestions
         $result = self::getEntitiesByGroup($response, $value, $group);
-
-        // Display only 3 suggesstions
-        if($limit > 0)
-            $result = array_slice($result, 0, $limit);
 
         return $result;
     }
@@ -65,16 +68,39 @@ class HotelClient
         return $response['suggestions'];
     }
 
-    protected static function connectClient($value) 
+    protected static function newResultCollection(array $result) 
+    {
+        $newCollection = [];
+        foreach($result as $key => $data) {
+            $newCollection[$key]['api_hotel_id'] = $data['id'];
+            $newCollection[$key]['name'] = $data['name'];
+            $newCollection[$key]['price'] = isset($data['ratePlan']['price']) ? $data['ratePlan']['price']['current'] : '';
+            $newCollection[$key]['guest_review_txt'] = isset($data['guestReviews']['badgeText']) ? $data['guestReviews']['badgeText'] : '';
+            $newCollection[$key]['guest_review_num'] = isset($data['guestReviews']['rating']) ? $data['guestReviews']['rating'] : '';
+            $newCollection[$key]['star_rating'] = $data['starRating'];
+            $newCollection[$key]['lat'] = isset($data['coordinate']['lat']) ? $data['coordinate']['lat'] : '';
+            $newCollection[$key]['long'] = isset($data['coordinate']['lon']) ? $data['coordinate']['lon'] : '';
+            $newCollection[$key]['street_address'] = isset($data['address']['streetAddress']) ? $data['address']['streetAddress'] : '';
+            $newCollection[$key]['extended_address'] = isset($data['address']['extendedAddress']) ? $data['address']['extendedAddress'] : '';
+            $newCollection[$key]['locality'] = isset($data['address']['locality']) ? $data['address']['locality'] : '';
+            $newCollection[$key]['postal_code'] = isset($data['address']['postalCode']) ? $data['address']['postalCode'] : '';
+            $newCollection[$key]['region'] = isset($data['address']['region']) ? $data['address']['region'] : '';
+            $newCollection[$key]['country_name'] = isset($data['address']['countryName']) ? $data['address']['countryName'] : '';
+            $newCollection[$key]['country_code'] = isset($data['address']['countryCode']) ? $data['address']['countryCode'] : '';
+            $newCollection[$key]['thumbnail_url'] = isset($data['optimizedThumbUrls']['srpDesktop']) ? $data['optimizedThumbUrls']['srpDesktop'] : '';
+        }
+        return $newCollection;
+    }
+
+    protected static function connectClient($value, $check_in_date = null) 
     {
         $client = 'hotels4';
         $host = env('RAPIDAPI_HOTEL_HOST');
         $key = env('RAPIDAPI_KEY');
 
         $rapidApiClient = new RapidApiClient($client, $host, $key);
-        $response = $rapidApiClient->curlSetup($value);
+        $response = $rapidApiClient->curlSetup($value, $check_in_date);
 
         return $response;
     }
-
 }

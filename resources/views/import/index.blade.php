@@ -12,7 +12,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h1>Import CSV data</h1>
-                    <p>Here store data for places (columns must be country, city, and date)</p>
+                    <p>Store data for places (columns must be country, city, and date)</p>
                     <form action="{{ route('import.perform') }}" method="post" enctype="multipart/form-data">
                     	@csrf
 						<div class="input-group mb-3">
@@ -30,7 +30,11 @@
         <div class="bg-light p-5 rounded">
         	<h1>Import list</h1>
         	<p>Store data as places?</p>
-        	<p class="text-muted"><strong>Reminder:</strong> After import import csv file will be deleted.</p>
+        	<p class="text-muted"><strong>Reminder:</strong></p>
+        	<ul>
+        		<li class="text-muted">After import to database places will also get destination id and geo id from RapidAPI(hotels4).</li>
+        		<li class="text-muted">After import csv file will be deleted.</li>
+        	</ul>
         	@if($imports->isEmpty())
     			<p>No results.</p>
     		@endif

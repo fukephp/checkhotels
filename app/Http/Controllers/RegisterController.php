@@ -10,8 +10,7 @@ class RegisterController extends Controller
 {
     /**
      * Display register page.
-     * 
-     * @return \Illuminate\Http\Response
+     * @test test_register_get_page
      */
     public function show()
     {
@@ -20,10 +19,11 @@ class RegisterController extends Controller
 
     /**
      * Handle account registration request
-     * 
      * @param RegisterRequest $request
+     * @test test_it_register_new_user
+     * @test test_it_register_new_user_with_error_password_confirmation
+     * @test test_it_register_new_user_with_error_email
      * 
-     * @return \Illuminate\Http\Response
      */
     public function register(RegisterRequest $request) 
     {

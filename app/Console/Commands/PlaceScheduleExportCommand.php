@@ -57,24 +57,33 @@ class PlaceScheduleExportCommand extends Command
             Log::channel('placeexportlog')->info('Turn on hotels client for place city:'.$place->city);
 
             // Store hotels using hotel client
-            $clientHotels = HotelClient::searchByGroup($place->city, 'HOTEL_GROUP', $limit = 3);
+            $clientHotels = HotelClient::searchByGroup($place->api_destination_id, $place->date->format('Y-m-d'), 'HOTEL_GROUP', $limit = 3);
             if(!empty($clientHotels)) {
 
                 Log::channel('placeexportdatalog')->info('City '.$place->city.' hotel client data: '.json_encode($clientHotels));
 
                 foreach($clientHotels as $clientHotel) {
                     $name = $clientHotel['name'];
-                    $caption = strip_tags($clientHotel['caption']);
-                    $lat = $clientHotel['latitude'];
-                    $long = $clientHotel['longitude'];
                     // Check if hotel exists
                     if(!$place->hotels()->haveHotel($name)->exists()) {
                         // Save new hotel
                         $new_hotel = new Hotel;
+                        $new_hotel->api_hotel_id = $clientHotel['api_hotel_id'];
                         $new_hotel->name = $name;
-                        $new_hotel->caption = $caption;
-                        $new_hotel->lat = $lat;
-                        $new_hotel->long = $long;
+                        $new_hotel->price = $clientHotel['price'];
+                        $new_hotel->guest_review_txt = $clientHotel['guest_review_txt'];
+                        $new_hotel->guest_review_num = $clientHotel['guest_review_num'];
+                        $new_hotel->star_rating = $clientHotel['star_rating'];
+                        $new_hotel->lat = $clientHotel['lat'];
+                        $new_hotel->long = $clientHotel['long'];
+                        $new_hotel->street_address = $clientHotel['street_address'];
+                        $new_hotel->extended_address = $clientHotel['extended_address'];
+                        $new_hotel->locality = $clientHotel['locality'];
+                        $new_hotel->postal_code = $clientHotel['postal_code'];
+                        $new_hotel->region = $clientHotel['region'];
+                        $new_hotel->country_name = $clientHotel['country_name'];
+                        $new_hotel->country_code = $clientHotel['country_code'];
+                        $new_hotel->thumbnail_url = $clientHotel['thumbnail_url'];
                         // Save new hotel assign to current place
                         if($place_hotel = $place->hotels()->save($new_hotel)) {
                             $this->info('The hotel ('. $name .') is stored in city '.$place->city);

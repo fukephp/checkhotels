@@ -10,8 +10,8 @@ class LoginController extends Controller
 {
     /**
      * Display login page.
+     * @test test_login_get_page
      * 
-     * @return Renderable
      */
     public function show()
     {
@@ -20,10 +20,10 @@ class LoginController extends Controller
 
     /**
      * Handle account login request
-     * 
      * @param LoginRequest $request
+     * @test test_user_can_login_with_correct_credentials
+     * @test test_user_cannot_login_with_incorrect_password
      * 
-     * @return \Illuminate\Http\Response
      */
     public function login(LoginRequest $request)
     {

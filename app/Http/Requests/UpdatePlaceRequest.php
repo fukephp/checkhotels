@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SearchPlaceRequest extends FormRequest
+class UpdatePlaceRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,8 @@ class SearchPlaceRequest extends FormRequest
     public function rules()
     {
         return [
-            'country' => 'required',
             'city' => 'required',
+            'country' => 'required',
             'date' => 'required'
         ];
     }

@@ -18,6 +18,8 @@ class Place extends Model
         'country',
         'city',
         'date',
+        'api_destination_id',
+        'api_geo_id'
     ];
 
     /**
@@ -30,6 +32,14 @@ class Place extends Model
         'updated_at',
         'date'
     ];
+
+    protected $appends = ['full_name'];
+
+    // Full name (city, country)
+    public function getFullNameAttribute()
+    {
+        return $this->city . ', ' . $this->country;
+    }
 
     /**
      * Get the comments for the blog post.

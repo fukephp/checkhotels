@@ -43,9 +43,12 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
         Route::get('/places/create', 'PlaceController@create')->name('place.create');
         Route::post('/places/create/store', 'PlaceController@store')->name('place.store');
         Route::get('/places/{id}/view', 'PlaceController@view')->name('place.view');
+        Route::get('/places/{id}/edit', 'PlaceController@edit')->name('place.edit');
+        Route::post('/places/{id}/edit', 'PlaceController@update')->name('place.update');
+        Route::get('/places/{id}/delete', 'PlaceController@delete')->name('place.delete');
         Route::get('/places/{id}/export/hotels', 'PlaceController@exportHotel')->name('place.hotel.export');
         Route::post('/places/{id}/export/hotels/store', 'PlaceController@exportHotelStore')->name('place.hotel.export.store');
-        Route::post('/places/search', 'PlaceController@search')->name('place.search');
+        Route::post('/places/export', 'PlaceController@export')->name('place.export');
         /**
          * Hotels
          */

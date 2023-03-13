@@ -15,6 +15,8 @@
 		                <div class="col-lg-12">
 		                    <h1>{{ $place->city.', '.$place->country }}</h1>
 		                    <p>Submit and store this hotels in current place.</p>
+		                    <p>Default parameters: 1 adult(The number of adults in first room), Limit of 3 random results</p>
+		                    <p>Check in date: <b>{{ $place->date->format('Y-m-d') }}</b></p>
 		                </div>
 		            </div>
 		        </div>
@@ -30,11 +32,14 @@
 				<div class="card-columns">
 					    @foreach($clientHotels as $clientHotel)
 					        <div class="card bg-light mt-3 mb-3" style="width: 100%;">
-				                <div class="card-body">
-									<img src="https://maps.googleapis.com/maps/api/staticmap?size=300x300&maptype=roadmap\
-				&markers=size:mid%7Ccolor:red%7C{{ $clientHotel['name'] }}&key={{ env('GOOGLE_MAPS_STATIC_API_KEY') }}" class="card-img-top mb-3">
+				                <div class="card-body text-center">
+				                	<img src="{{ $clientHotel['thumbnail_url'] }}" class="card-img-top mb-3" style="height: 105px;">
+									<img src="https://maps.googleapis.com/maps/api/staticmap?center={{ $clientHotel['lat'] }},{{ $clientHotel['long'] }}&markers=color:red%7Clabel:C%7C{{ $clientHotel['lat'] }},{{ $clientHotel['long'] }}&zoom=18&size=300x300&key={{ env('GOOGLE_MAPS_STATIC_API_KEY') }}" class="card-img-top mb-3">
 				                    <h5 class="card-title">{{ $clientHotel['name'] }}</h5>
-				                    <h6 class="card-subtitle mb-2 text-muted">{!! $clientHotel['caption'] !!}</h6>
+				                    <p class="card-text">
+				                    	@include('hotel.partials.star_rating', ['star_rating' => $clientHotel['star_rating']])
+				                    </p>
+				                    <h6 class="card-subtitle mb-2 text-muted">{{ $clientHotel['price'] != '' ? 'Price: '. $clientHotel['price'] : '' }}</h6>
 				                </div>
 				            </div>
 					    @endforeach
