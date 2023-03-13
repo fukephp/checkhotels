@@ -36,20 +36,14 @@ Laravel project using RapidAPis for scraping data from hosts:
 - Setup database configuration in `.env` file and migrate database `php artisan migrate` 
 - Create new user use seed `php artisan db:seed --class=UserTableSeeder`
 - Setup RapidAPI confiugration values in .env file `RAPIDAPI_HOTEL_HOST, RAPIDAPI_WEATHER_HOST, and RAPIDAPI_KEY`
-```
-RAPIDAPI_HOTEL_HOST="x-rapidapi-host: hotels4.p.rapidapi.com" 
-```
-```
-RAPIDAPI_WEATHER_HOST="x-rapidapi-host: community-open-weather-map.p.rapidapi.com" 
-```
-```
-RAPIDAPI_KEY="x-rapidapi-key: 8c81ef78c8msh54413f88200395ep1a3368jsncb53237ed8a8"
-```
-
+> RAPIDAPI_HOTEL_HOST="x-rapidapi-host: hotels4.p.rapidapi.com"
+> RAPIDAPI_WEATHER_HOST="x-rapidapi-host:
+> community-open-weather-map.p.rapidapi.com"
+> RAPIDAPI_KEY="x-rapidapi-key:
+> keyNum"
 - Setup Google maps static API
-```
-GOOGLE_MAPS_STATIC_API_KEY="AIzaSyAKpeS0-W6Sn4ie_XYoDXtPkQklnnep9RA"
-```
+> GOOGLE_MAPS_STATIC_API_KEY="API_KEY"
+
 
 - Run/Serve the application on the PHP development server use command `php artisan serve` 
 - Use csv file that is located `public/csv/placesdata.csv` and register or login with seed user, then in homepage go to Import CSV data for places link and use upload form
