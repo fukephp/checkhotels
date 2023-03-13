@@ -32,9 +32,9 @@ Laravel project using RapidAPis for scraping data from hosts:
 > RAPIDAPI_WEATHER_HOST="x-rapidapi-host:
 > community-open-weather-map.p.rapidapi.com"
 > RAPIDAPI_KEY="x-rapidapi-key:
-> 8c81ef78c8msh54413f88200395ep1a3368jsncb53237ed8a8"
+> keyNum"
 - Setup Google maps static API
-> GOOGLE_MAPS_STATIC_API_KEY="AIzaSyAKpeS0-W6Sn4ie_XYoDXtPkQklnnep9RA"
+> GOOGLE_MAPS_STATIC_API_KEY="API_KEY"
 
 - Run/Serve the application on the PHP development server use command `php artisan serve` 
 
